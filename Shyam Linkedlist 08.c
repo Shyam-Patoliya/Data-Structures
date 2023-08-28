@@ -94,16 +94,16 @@ void main(){
 	insertafternode(head->next->next, 33);
 	printf("linked list:");
 	printlist();
-    deleteatbegin();
-    deleteatend();
-    deletenode(33);
-    printf("\nLinked List after deletion: ");
-    printlist();
-    k = searchlist(44);
-   if (k == 1)
-      printf("\nElement found");
-   else
-      printf("\nElement is not present in the list");
+        deleteatbegin();
+        deleteatend();
+        deletenode(33);
+        printf("\nLinked List after deletion: ");
+        printlist();
+        k = searchlist(44);
+       if (k == 1)
+          printf("\nElement found");
+       else
+          printf("\nElement is not present in the list");
 }
 
 
