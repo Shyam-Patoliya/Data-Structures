@@ -1,8 +1,5 @@
 #include<stdio.h>
 
-
-
-
 int recursive_BS(int arr[],int low, int high, int key)
 {
 	
