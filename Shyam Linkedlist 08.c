@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//Creation of node
+
 struct node{
     int data;
-    struct node *next; //pointer which points to the next node of struct type
+    struct node *next; 
 };
 
-struct node *head= NULL;//initializing head pointer
+struct node *head= NULL;
 void printlist(){
     struct node *temp=head;
     printf("\n[ ");
