@@ -264,7 +264,7 @@ void main(){
     
     while(ops!=7){
     printf("\n1) Create linked List \n2) Display List \n3) insert at begin \n4) Insert at end \n5) insert at postion \n6) insert after postion \n7) Exit \n");
-    printf("8) deleteatbegin\n9) deleteatend\n10) deleteatpos\n11) deleteafterpos\n12) search\n13) Sort\n14) Reverse\n15) Concatenate\n16) Intersection");
+    printf("8) deleteatbegin\n9) deleteatend\n10) deleteatpos\n11) deleteafterpos\n12) search\n13) Sort\n14) Reverse\n15) Concatenate\n16) Intersection\n");
     printf("Enter the choice ");
     scanf("%d",&ops);
     switch(ops){
