@@ -1,89 +1,200 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-struct bt{
-    int data;
-    struct bt *left;
-    struct bt *right;
+//creating a binary search tree
+struct node{
+	struct node *left, *right;
+	int data;
 };
 
-struct bt *create(){
-    struct bt *newnode = malloc(sizeof(struct bt));
-    printf("Enter data: ");
-    scanf("%d",&newnode->data);
-    newnode->left=NULL;
-    newnode->right=NULL;
-    return newnode;
-}
-void insert(struct bt *root,struct bt *node){
-    if(root==NULL){
-        root=node;
-    }
-    else{
-        if(node->data < root->data){
-            if(root->left!=NULL){
-                insert(root->left,node);
-            }
-            else{
-                root->left = node;
-            }
-        }
-        if(node->data > root->data){
-            if(root->right!=NULL){
-                insert(root->right,node);
-            }
-            else{
-                root->right=node;
-            }
-        }
-    }
+//performing basic operations
+
+struct node* newnode(int x)
+{
+	struct node *temp = malloc(sizeof(struct node));
+	temp->data = x;
+	temp->left = NULL;
+	temp->right = NULL;
+	return temp;
 }
 
-void preorder(struct bt *root){
-    if(root!=NULL){
-        printf("%d ",root->data);
-        preorder(root->left);
-        preorder(root->right);
-    }
+struct node* insert(struct node *root, int x)
+{
+	if(root == NULL)
+	{
+		return newnode(x);
+	}
+	else if(x > root->data)
+	{
+		root->right = insert(root->right, x);
+	}
+	else if(x <= root->data)
+	{
+		root->left = insert(root->left, x);
+	}
+	return root;	
 }
-void inorder(struct bt *root){
-    if(root!=NULL){
-        inorder(root->left);
-        printf("%d ",root->data);
-        inorder(root->right);
-    }
+
+struct node* del(struct node *root, int x)
+{
+	if(root == NULL)
+	{
+		return NULL;
+	}
+	else if(x > root->data)
+	{
+		root->right = del(root->right, x);
+	}
+	else if(x < root->data)
+	{
+		root->left = del(root->left, x);
+	}
+	else
+	{
+		// Case 1: Node with only one child or no child
+		if (root->left == NULL)
+		{
+			struct node *temp = root->right;
+			free(root);
+			return temp;
+		}
+		else if (root->right == NULL)
+		{
+			struct node *temp = root->left;
+			free(root);
+			return temp;
+		}
+		// Case 2: Node with two children
+	
+		struct node* temp = root->right;
+		while (temp->left != NULL)
+		{
+			temp = temp->left;
+		}
+
+		root->data = temp->data;
+
+		root->right = del(root->right, temp->data);
+	}
+	return root;
 }
-void postorder(struct bt *root){
-    if(root!=NULL){
-        postorder(root->left);
-        postorder(root->right);
-        printf("%d ",root->data);
-    }
+
+int height(struct node *root)
+{
+	if(root==NULL)
+	{
+		return 0;
+	}
+	else{
+		int lh=height(root->left);
+		int rh=height(root->right);
+	
+	    if(rh>lh)
+	    {
+	    	return (rh+1);
+	    }
+	    
+	    else{
+	    	return (lh+1);
+	    }
+	}
+	
 }
-void main(){
-    int num;
-    struct bt *root=NULL,*node,*current;
-    printf("Enter the number of nodes you want: ");
-    scanf("%d",&num);
-    printf("Enter the nodes data: \n");
-    while(num!=0){
-        node=create();
-        if(root==NULL){
-            root=node;
-        }
-        else{
-            insert(root,node);
-        }
-        num--;
-    }
-    printf("\nPreorder traversal: ");
-    preorder(root);
 
-    printf("\nInorder traversal: ");
-    inorder(root);
+void pre(struct node *root)
+{
+	if(root!=NULL){
+		printf("%d ",root->data);
+		pre(root->left);
+		pre(root->right);
+	}
+}
 
-    printf("\nPostorder traversal: ");
-    postorder(root);
+void in(struct node *root)
+{
+	if(root!=NULL){
+		in(root->left);
+		printf("%d ",root->data);
+		in(root->right);
+	}
+}
 
-    printf("\n");
+void post(struct node *root)
+{
+	if(root!=NULL){
+		post(root->left);
+		post(root->right);
+		printf("%d ",root->data);		
+	}
+}
+
+
+int main()
+{
+	int choice=0;
+	struct node *root=NULL;
+	while(choice!=7)
+	{
+		printf("\n\nMenu\nEnter 1 to create BST\nEnter 2 to insert child\nEnter 3 to delete child\nEnter 4 Preorder Traversal\nEnter 5 Inorder traversal\nEnter 6 PostOrder Traversal\nEnter 7 to Exit\n");
+		printf("\nEnter your choice : ");
+		scanf("%d",&choice);
+		switch(choice)
+		{
+			case 1:{
+				
+				printf("\nEnter value of root node : ");
+				int x;
+				scanf("%d",&x);
+				root=newnode(x);
+				break;
+			}
+			
+			case 2:{
+				printf("How many nodes do you wish to enter : ");
+				int n;
+				scanf("%d",&n);
+				int i,a[n];
+				printf("Enter values of nodes : ");
+				for(i=0;i<n;i++)
+				{
+					scanf("%d",&a[i]);
+					root=insert(root,a[i]);
+				}
+				break;
+			}
+			
+			case 3:{
+				int z;
+				printf("Enter value of element to be deleted : ");
+				scanf("%d",&z);
+				root=del(root,z);
+				break;
+			}
+			
+			case 4:
+				printf("\nPreorder Traversal : ");
+				pre(root);
+				break;
+			
+			case 5:
+				printf("\nInorder Traversal : ");
+				in(root);
+				break;
+				
+			case 6:
+				printf("\nPostorder Traversal : ");
+				post(root);
+				break;
+				
+			case 7:
+				break;
+				
+			default:
+				printf("\nNo such option.");
+		}
+	}
+	
+	return 0;
+	
+
 }
