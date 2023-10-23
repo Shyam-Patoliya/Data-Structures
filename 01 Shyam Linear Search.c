@@ -1,21 +1,31 @@
 #include<stdio.h>
-int linear_search(){
-	int arr[5],key,i,j;
-	printf("Enter the elements:");
-	for(i=0;i<5;i++){
-		scanf("%d",&arr);
+
+int main()
+{  
+   int flag=0;
+	int n;
+	printf("Enter the no. of elements");
+	scanf("%d",&n);
+	int a[n];
+   for(int i=0;i<n;i++)
+	{
+		printf("Enter array element:");
+		scanf("%d",&a[i]);
 	}
-	printf("Enter the key to find:");
-	scanf("%d",&key);
-	
-	if(arr[i]=key){
-		printf("Key found");
-	
+	int data;
+	printf("Enter the element to be searched:");
+	scanf("%d",&data);
+	for(int i=0;i<n;i++)
+	{
+		if(a[i]==data)
+		{
+			flag=1;
+			printf("Element found at %d index",i);
+		}
 	}
-	else{
-		printf("Key Not Found");
+	if(flag==0)
+	{
+		printf("Element not found");
 	}
 	return 0;
 }
-
-
